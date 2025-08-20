@@ -19,7 +19,8 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from pets.views import PetViewSet
 from adoptions.views import AdoptionRequestViewSet
-from users.views import RegisterView
+from userz.views import RegisterView, home # import the home view
+# Import necessary views for JWT authentication
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = DefaultRouter()
@@ -32,4 +33,5 @@ urlpatterns = [
     path('api/login/', TokenObtainPairView.as_view()),
     path('api/token/refresh/', TokenRefreshView.as_view()),
     path('api/', include(router.urls)),
+    path('', home, name='home'), #root URL
 ]
