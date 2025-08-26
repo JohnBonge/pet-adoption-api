@@ -14,24 +14,40 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# config/urls.py
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+
 from pets.views import PetViewSet
 from adoptions.views import AdoptionRequestViewSet
-from userz.views import RegisterView, home # import the home view
-# Import necessary views for JWT authentication
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from userz.views import RegisterView, LoginView, ProfileView, home
 
+# JWT views
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+# DRF Router
 router = DefaultRouter()
 router.register(r"pets", PetViewSet, basename="pets")
 router.register(r"adoptions", AdoptionRequestViewSet, basename="adoptions")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/register/', RegisterView.as_view()),
-    path('api/login/', TokenObtainPairView.as_view()),
-    path('api/token/refresh/', TokenRefreshView.as_view()),
-    path('api/', include(router.urls)),
-    path('', home, name='home'), #root URL
+    path("admin/", admin.site.urls),
+
+    # Authentication
+    path("api/register/", RegisterView.as_view(), name="register"),
+    path("api/login/", TokenObtainPairView.as_view(), name="login"),
+    path("api/login/", LoginView.as_view(), name="login"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+
+    # API routes
+    path("api/", include(router.urls)),
+
+    # Root
+    path("", home, name="home"),
+
+    path("api/profile/", ProfileView.as_view(), name="profile"),
 ]
