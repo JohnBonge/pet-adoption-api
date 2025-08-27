@@ -18,36 +18,61 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from rest_framework import permissions
 
+# Views
 from pets.views import PetViewSet
 from adoptions.views import AdoptionRequestViewSet
-from userz.views import RegisterView, LoginView, ProfileView, home
+from userz.views import RegisterView, LoginView, ProfileView, home, ChangePasswordView, ResetPasswordRequestView, ResetPasswordConfirmView, VerifyEmailView
 
-# JWT views
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+# JWT
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+# Swagger
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 # DRF Router
 router = DefaultRouter()
 router.register(r"pets", PetViewSet, basename="pets")
 router.register(r"adoptions", AdoptionRequestViewSet, basename="adoptions")
 
+# Swagger schema view
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Pet Adoption API",
+        default_version='v1',
+        description="API documentation for Pet Adoption API",
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
+
 urlpatterns = [
+    # Admin
     path("admin/", admin.site.urls),
 
     # Authentication
     path("api/register/", RegisterView.as_view(), name="register"),
-    path("api/login/", TokenObtainPairView.as_view(), name="login"),
     path("api/login/", LoginView.as_view(), name="login"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 
-    # API routes
+    # API
     path("api/", include(router.urls)),
+
+    # Profile
+    path("api/profile/", ProfileView.as_view(), name="profile"),
 
     # Root
     path("", home, name="home"),
 
-    path("api/profile/", ProfileView.as_view(), name="profile"),
+    # Swagger / OpenAPI
+    path("swagger/", schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path("redoc/", schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
+    # Password & email verification
+    path("api/change-password/", ChangePasswordView.as_view(), name="change-password"),
+    path("api/reset-password/request/", ResetPasswordRequestView.as_view(), name="reset-password-request"),
+    path("api/reset-password/confirm/", ResetPasswordConfirmView.as_view(), name="reset-password-confirm"),
+    path("api/verify-email/", VerifyEmailView.as_view(), name="verify-email"),
 ]

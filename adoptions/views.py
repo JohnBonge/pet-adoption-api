@@ -21,6 +21,8 @@ class AdoptionRequestViewSet(mixins.CreateModelMixin,
         return AdoptionRequest.objects.select_related("pet","user").filter(user=user)
 
     def perform_create(self, serializer):
+        if self.request.user.is_shelter:
+            raise PermissionError("Shelters cannot adopt pets.")
         pet = Pet.objects.get(pk=self.request.data.get("pet"))
         # Prevent self-applying by shelters (optional)
         serializer.save(user=self.request.user, pet=pet)

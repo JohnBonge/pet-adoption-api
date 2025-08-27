@@ -87,6 +87,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Email settings (console backend for dev)
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "rjbigango@gmail.com"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
