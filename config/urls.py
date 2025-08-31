@@ -16,7 +16,7 @@ Including another URLconf
 """
 # config/urls.py
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
 from rest_framework import permissions
 
@@ -57,6 +57,9 @@ urlpatterns = [
     path("api/login/", LoginView.as_view(), name="login"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 
+    # Django’s auth views
+    path('accounts/', include('django.contrib.auth.urls')),
+
     # API
     path("api/", include(router.urls)),
 
@@ -75,4 +78,5 @@ urlpatterns = [
     path("api/reset-password/request/", ResetPasswordRequestView.as_view(), name="reset-password-request"),
     path("api/reset-password/confirm/", ResetPasswordConfirmView.as_view(), name="reset-password-confirm"),
     path("api/verify-email/", VerifyEmailView.as_view(), name="verify-email"),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
 ]
