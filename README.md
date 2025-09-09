@@ -1,4 +1,4 @@
-🐾 Pet Adoption API
+Pet Adoption API
 
 A Django REST Framework–based backend for managing pet adoptions.
 This API connects shelters with adopters, allowing shelters to list pets and adopters to submit adoption requests.
@@ -11,22 +11,22 @@ Built with:
 
 ⸻
 
-✨ Features
-	•	🔑 User registration & authentication (Shelter or Adopter)
-	•	🐶 Pet management
+Features
+	•	User registration & authentication (Shelter or Adopter)
+	•	Pet management
 	•	Shelters can create, update, and delete pets
 	•	Adopters can view pets, search, filter, and order results
-	•	📋 Adoption requests
+	•	Adoption requests
 	•	Adopters can submit requests for pets
 	•	Shelters can approve, reject, or keep requests pending
-	•	🔒 Role-based permissions
+	•	Role-based permissions
 	•	Only shelters can manage pets
 	•	Adopters cannot apply to their own pets
-	•	📖 Interactive API documentation at /swagger/
+	•	Interactive API documentation at /swagger/
 
 ⸻
 
-🛠️ Installation
+Installation
 
 1. Clone the repo
    git clone https://github.com/yourusername/pet-adoption-api.git
@@ -50,7 +50,7 @@ python manage.py migrate
 6. Run server
    python manage.py runserver
 
-🚀 API Endpoints
+API Endpoints
 
 Authentication
 	•	POST /api/register/ → Register new user (adopter or shelter)
@@ -72,7 +72,7 @@ Adoption Requests
 
 ⸻
 
-🔑 Example Request
+Example Request
 
 Register adopter
 
@@ -94,24 +94,23 @@ POST /api/register/
   "is_shelter": true
 }
 
-📖 API Docs
+API Docs
 
 Interactive Swagger UI is available at:
-👉 http://127.0.0.1:8000/swagger/
+http://127.0.0.1:8000/swagger/
 
 ⸻
 
-🧪 Running Tests
+Running Tests
 python manage.py test
 
-📌 Roadmap
+Roadmap
 	•	✅ Basic shelter & adopter roles
 	•	✅ Pet management & adoption requests
 	•	⏳ Notifications for approved/rejected adoptions
 	•	⏳ Image uploads for pets
-	•	⏳ Deployment with Docker
 
- 🤝 Contributing
+ Contributing
 	1.	Fork the repo
 	2.	Create a feature branch:
  git checkout -b feature/my-feature
@@ -119,6 +118,6 @@ python manage.py test
  git commit -m "feat: add my feature"
  	4.	Push branch and open a PR
 
-  📄 License
+License
 
 This project is licensed under the MIT License.
