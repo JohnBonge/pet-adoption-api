@@ -29,7 +29,7 @@ Features
 Installation
 
 1. Clone the repo
-   git clone https://github.com/yourusername/pet-adoption-api.git
+   git clone https://github.com/JohnBonge/pet-adoption-api.git
 cd pet-adoption-api
 
 2. Create and activate virtual environment
