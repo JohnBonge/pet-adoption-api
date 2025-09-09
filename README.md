@@ -1,42 +1,124 @@
-Pet Adoption API
+🐾 Pet Adoption API
 
-Welcome to the Pet Adoption API — a Django-based backend application for managing pet adoptions, users, and adoption requests.
+A Django REST Framework–based backend for managing pet adoptions.
+This API connects shelters with adopters, allowing shelters to list pets and adopters to submit adoption requests.
 
-Features
-	•	Custom User Model: CustomUser in userz app for authentication and user management.
-	•	Adoption Requests: Users can submit adoption requests for pets.
-	•	Home View: Basic home endpoint returning a welcome message.
-	•	RESTful Endpoints: Structured views ready for API expansion.
-	•	Modular Structure: Separate apps for userz, pets, and adoptions for scalability.
+Built with:
+	•	Django
+	•	Django REST Framework
+	•	drf-yasg (Swagger/OpenAPI docs)
+	•	django-filter
 
-Installation
-	1.	Clone the repository
-       git clone <repository-url>
-       cd pet-adoption-api
+⸻
 
-	2.	Create and activate a virtual environment
-       python3 -m venv .venv
-       source .venv/bin/activate  # macOS/Linux
-       .venv\Scripts\activate     # Windows
+✨ Features
+	•	🔑 User registration & authentication (Shelter or Adopter)
+	•	🐶 Pet management
+	•	Shelters can create, update, and delete pets
+	•	Adopters can view pets, search, filter, and order results
+	•	📋 Adoption requests
+	•	Adopters can submit requests for pets
+	•	Shelters can approve, reject, or keep requests pending
+	•	🔒 Role-based permissions
+	•	Only shelters can manage pets
+	•	Adopters cannot apply to their own pets
+	•	📖 Interactive API documentation at /swagger/
 
-	3.	Install dependencies
-       pip install -r requirements.txt
+⸻
 
-	4.	Apply migrations
-       python manage.py makemigrations
-       python manage.py migrate
+🛠️ Installation
 
-	5.	Run the development server
-      python manage.py runserver
+1. Clone the repo
+   git clone https://github.com/yourusername/pet-adoption-api.git
+cd pet-adoption-api
 
-  6.	Test the home endpoint
-      Visit http://127.0.0.1:8000/
+2. Create and activate virtual environment
+   python3 -m venv .venv
+source .venv/bin/activate   # Mac/Linux
+.venv\Scripts\activate      # Windows
 
-Project Structure
-pet-adoption-api/
-├── adoptions/       # Adoption requests app
-├── pets/            # Pets management app
-├── userz/           # Custom user management app
-├── config/          # Project settings & URLs
-├── manage.py
-└── requirements.txt
+3. Install dependencies
+   pip install -r requirements.txt
+
+4. Set up database
+   python manage.py makemigrations
+python manage.py migrate
+
+5. Create superuser (admin)
+   python manage.py createsuperuser
+
+6. Run server
+   python manage.py runserver
+
+🚀 API Endpoints
+
+Authentication
+	•	POST /api/register/ → Register new user (adopter or shelter)
+	•	POST /api/token/ → Obtain JWT access & refresh tokens
+	•	POST /api/token/refresh/ → Refresh JWT token
+
+Pets
+	•	GET /api/pets/ → List pets (search, filter, order supported)
+	•	POST /api/pets/ → Create pet (shelter only)
+	•	PUT/PATCH /api/pets/{id}/ → Update pet (shelter owner only)
+	•	DELETE /api/pets/{id}/ → Delete pet (shelter owner only)
+
+Adoption Requests
+	•	GET /api/adoptions/ → List adoption requests
+	•	Adopters see their own requests
+	•	Shelters see requests for their pets
+	•	POST /api/adoptions/ → Create adoption request (adopter only)
+	•	PATCH /api/adoptions/{id}/ → Update status (shelter only: approve/reject/pending)
+
+⸻
+
+🔑 Example Request
+
+Register adopter
+
+POST /api/register/
+{
+  "username": "john_doe",
+  "password": "mypassword",
+  "email": "john@example.com",
+  "is_shelter": false
+}
+
+Register shelter
+
+POST /api/register/
+{
+  "username": "happy_shelter",
+  "password": "mypassword",
+  "email": "shelter@example.com",
+  "is_shelter": true
+}
+
+📖 API Docs
+
+Interactive Swagger UI is available at:
+👉 http://127.0.0.1:8000/swagger/
+
+⸻
+
+🧪 Running Tests
+python manage.py test
+
+📌 Roadmap
+	•	✅ Basic shelter & adopter roles
+	•	✅ Pet management & adoption requests
+	•	⏳ Notifications for approved/rejected adoptions
+	•	⏳ Image uploads for pets
+	•	⏳ Deployment with Docker
+
+ 🤝 Contributing
+	1.	Fork the repo
+	2.	Create a feature branch:
+ git checkout -b feature/my-feature
+ 	3.	Commit changes:
+ git commit -m "feat: add my feature"
+ 	4.	Push branch and open a PR
+
+  📄 License
+
+This project is licensed under the MIT License.
